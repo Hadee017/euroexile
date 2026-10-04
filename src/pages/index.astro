@@ -9,14 +9,13 @@ const { origins, destinations, celebrity_presets } = citiesData;
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <title>EuroExile | Financial Autopsy & Escape Calculator</title>
-  <meta name="description" content="Calculate your true net income after European taxes, landlord servitude days, and generate your viral exit ticket." />
+  <title>EuroExile | Financial Autopsy, Rent Swap & Nomad Escape Engine</title>
+  <meta name="description" content="Calculate your true tax wedge, landlord servitude days, 90-day Schengen clock, and print your 9:16 viral escape boarding pass." />
   
   <link rel="canonical" href="https://euroexile.vercel.app/" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <style>
     .font-mono-receipt { font-family: 'Space Mono', monospace; }
@@ -31,26 +30,27 @@ const { origins, destinations, celebrity_presets } = citiesData;
         EURO<span class="text-red-500">EXILE</span>
       </a>
       <div class="flex items-center gap-4 text-xs font-mono text-zinc-400">
-        <a href="#audit" class="hover:text-white transition">Autopsy</a>
+        <a href="#audit" class="hover:text-white transition">Escape Engine</a>
+        <a href="#qa-section" class="hover:text-white transition">Q&A Audit</a>
         <a href="#methodology" class="hover:text-white transition">Methodology</a>
       </div>
     </div>
   </nav>
 
   <!-- Hero Header -->
-  <header class="py-10 md:py-14 text-center px-4 max-w-3xl mx-auto">
+  <header class="py-10 md:py-14 text-center px-4 max-w-4xl mx-auto">
     <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/40 border border-red-500/20 text-red-400 text-xs font-mono font-semibold mb-4">
       <span class="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
-      Zero Data Stored • 100% Client-Side Engine
+      100% Client-Side Engine • Zero Tracking Cookies
     </div>
     <h1 class="text-3xl md:text-5xl font-black tracking-tight text-white mb-3">
-      How much of your life belongs to your <span class="text-red-500 underline decoration-red-500/30">landlord</span>?
+      How much of your life belongs to your <span class="text-red-500 underline decoration-red-500/30">landlord</span> & <span class="text-red-500 underline decoration-red-500/30">state</span>?
     </h1>
-    <p class="text-zinc-400 text-xs md:text-sm max-w-xl mx-auto">
-      Calculate your tax bleed, discover the exact day you start earning for yourself, and print your satirical exit ticket.
+    <p class="text-zinc-400 text-xs md:text-sm max-w-2xl mx-auto">
+      The 3-in-1 escape engine: Calculate your statutory tax bleed, swap your shoebox rent for southern sunshine, and verify your legal nomad visa runway.
     </p>
 
-    <!-- Celebrity / Preset Bar -->
+    <!-- Celebrity / Politician Preset Bar -->
     <div class="mt-6 flex flex-wrap justify-center items-center gap-2">
       <span class="text-[11px] font-mono uppercase text-zinc-500 mr-1">Presets:</span>
       {celebrity_presets.map((preset) => (
@@ -68,20 +68,39 @@ const { origins, destinations, celebrity_presets } = citiesData;
     </div>
   </header>
 
-  <!-- Calculator & Artifact Container -->
-  <main id="audit" class="max-w-5xl mx-auto px-4 pb-16">
+  <!-- Main Calculator & Artifact Display -->
+  <main id="audit" class="max-w-6xl mx-auto px-4 pb-16">
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
       
-      <!-- Input Panel (Touch Optimized for Mobile) -->
-      <section class="lg:col-span-6 bg-zinc-900/60 border border-zinc-800 p-6 md:p-8 rounded-2xl shadow-xl space-y-5">
-        <div class="border-b border-zinc-800 pb-3">
-          <h2 class="text-sm font-bold uppercase tracking-wider text-white font-mono">1. The Financial Reality Input</h2>
-          <p class="text-xs text-zinc-400 mt-0.5">Move sliders to run the live calculation.</p>
+      <!-- Input Panel: User Control Center -->
+      <section class="lg:col-span-6 bg-zinc-900/60 border border-zinc-800 p-6 md:p-8 rounded-2xl shadow-xl space-y-6">
+        <div class="border-b border-zinc-800 pb-3 flex justify-between items-center">
+          <h2 class="text-sm font-bold uppercase tracking-wider text-white font-mono">1. User Parameters</h2>
+          <span class="text-[10px] font-mono text-emerald-400 bg-emerald-950/50 px-2 py-0.5 rounded border border-emerald-500/30">Real-Time Compute</span>
         </div>
 
-        <!-- Origin City -->
+        <!-- Life Parameter & Passport Toggles -->
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block text-[11px] font-mono uppercase text-zinc-400 mb-1 font-semibold">Passport Held</label>
+            <div class="grid grid-cols-3 gap-1 bg-zinc-950 p-1 rounded-xl border border-zinc-800 text-center text-xs font-mono">
+              <button type="button" class="passport-btn active py-1.5 rounded-lg bg-red-600 text-white font-bold" data-val="UK">UK</button>
+              <button type="button" class="passport-btn py-1.5 rounded-lg text-zinc-400 hover:text-white" data-val="EU">EU</button>
+              <button type="button" class="passport-btn py-1.5 rounded-lg text-zinc-400 hover:text-white" data-val="OTHER">Other</button>
+            </div>
+          </div>
+          <div>
+            <label class="block text-[11px] font-mono uppercase text-zinc-400 mb-1 font-semibold">Filing Status</label>
+            <div class="grid grid-cols-2 gap-1 bg-zinc-950 p-1 rounded-xl border border-zinc-800 text-center text-xs font-mono">
+              <button type="button" class="status-btn active py-1.5 rounded-lg bg-zinc-800 text-white font-bold" data-taxmod="1.0">Single</button>
+              <button type="button" class="status-btn py-1.5 rounded-lg text-zinc-400 hover:text-white" data-taxmod="0.88">Freelance</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Origin City Dropdown (10 Major European Hubs) -->
         <div>
-          <label for="originSelect" class="block text-xs font-mono uppercase text-zinc-400 mb-1 font-semibold">Origin Hub (Where you're trapped)</label>
+          <label for="originSelect" class="block text-xs font-mono uppercase text-zinc-400 mb-1 font-semibold">Where are you trapped? (Origin Hub)</label>
           <select id="originSelect" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-red-500 transition">
             {origins.map((o) => (
               <option value={o.id}>{o.name} ({o.country}) [{o.symbol}]</option>
@@ -89,13 +108,13 @@ const { origins, destinations, celebrity_presets } = citiesData;
           </select>
         </div>
 
-        <!-- Gross Salary Slider -->
+        <!-- Gross Annual Salary Slider -->
         <div>
           <div class="flex justify-between items-center mb-1">
             <label for="salaryRange" class="text-xs font-mono uppercase text-zinc-400 font-semibold">Gross Annual Salary</label>
             <span id="salaryVal" class="text-sm font-bold font-mono text-red-400">£50,000</span>
           </div>
-          <input type="range" id="salaryRange" min="20000" max="150000" step="1000" value="50000"
+          <input type="range" id="salaryRange" min="15000" max="180000" step="1000" value="50000"
                  class="w-full accent-red-500 bg-zinc-800 h-2 rounded-lg cursor-pointer" />
         </div>
 
@@ -105,23 +124,23 @@ const { origins, destinations, celebrity_presets } = citiesData;
             <label for="rentRange" class="text-xs font-mono uppercase text-zinc-400 font-semibold">Monthly Rent Paid</label>
             <span id="rentVal" class="text-sm font-bold font-mono text-red-400">£1,650</span>
           </div>
-          <input type="range" id="rentRange" min="300" max="4000" step="50" value="1650"
+          <input type="range" id="rentRange" min="300" max="4500" step="25" value="1650"
                  class="w-full accent-red-500 bg-zinc-800 h-2 rounded-lg cursor-pointer" />
         </div>
 
-        <!-- Months in Apartment Slider (Powers Slap Your Landlord Metric) -->
+        <!-- Time in Current Flat (Powers the Slap Landlord counter) -->
         <div>
           <div class="flex justify-between items-center mb-1">
-            <label for="monthsRange" class="text-xs font-mono uppercase text-zinc-400 font-semibold">Time in Current Flat</label>
+            <label for="monthsRange" class="text-xs font-mono uppercase text-zinc-400 font-semibold">Months in Current Apartment</label>
             <span id="monthsVal" class="text-sm font-bold font-mono text-zinc-300">24 months</span>
           </div>
-          <input type="range" id="monthsRange" min="1" max="72" step="1" value="24"
+          <input type="range" id="monthsRange" min="1" max="96" step="1" value="24"
                  class="w-full accent-zinc-500 bg-zinc-800 h-2 rounded-lg cursor-pointer" />
         </div>
 
-        <!-- Target Destination -->
+        <!-- Escape Target Dropdown (9 Arbitrage Havens) -->
         <div>
-          <label for="targetSelect" class="block text-xs font-mono uppercase text-zinc-400 mb-1 font-semibold">Select Escape Target</label>
+          <label for="targetSelect" class="block text-xs font-mono uppercase text-zinc-400 mb-1 font-semibold">Select Escape Sanctuary</label>
           <select id="targetSelect" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-red-500 transition">
             {destinations.map((d) => (
               <option value={d.id}>{d.name} ({d.country})</option>
@@ -129,23 +148,23 @@ const { origins, destinations, celebrity_presets } = citiesData;
           </select>
         </div>
 
-        <!-- Quick Slap Landlord Stat -->
-        <div class="p-3.5 bg-red-950/20 border border-red-500/20 rounded-xl text-center">
-          <p class="text-[10px] font-mono uppercase text-zinc-400">Total Transferred to Landlord's Wealth:</p>
-          <p id="totalRentPaidText" class="text-lg font-black font-mono text-red-400">£39,600</p>
-          <p class="text-[10px] text-zinc-500 italic mt-0.5">They used this to finance their holiday home.</p>
+        <!-- Slap Your Landlord Dynamic Banner -->
+        <div class="p-4 bg-red-950/20 border border-red-500/20 rounded-xl text-center space-y-1">
+          <p class="text-[10px] font-mono uppercase text-zinc-400">Wealth Donated To Landlord's Mortgage:</p>
+          <p id="totalRentPaidText" class="text-xl font-black font-mono text-red-400">£39,600</p>
+          <p class="text-[11px] text-zinc-400 italic">They used your checks to finance holidays in Ibiza while refusing to fix the boiler.</p>
         </div>
       </section>
 
-      <!-- Output Artifact: The Official Boarding Pass (9:16 Optimized) -->
+      <!-- The Viral Boarding Pass (9:16 Aspect Ratio) -->
       <section class="lg:col-span-6 flex flex-col items-center">
         <div id="receiptWrapper" class="w-full max-w-sm bg-white text-zinc-950 rounded-2xl p-6 shadow-2xl border border-zinc-200 font-mono-receipt text-xs space-y-3.5">
           
-          <!-- Header -->
+          <!-- Boarding Pass Header -->
           <div class="border-b-2 border-dashed border-zinc-400 pb-3 text-center">
             <div class="flex justify-between items-center text-[10px] text-zinc-500 mb-1 font-bold">
               <span>BOARDING PASS #09284</span>
-              <span class="text-red-600">CONFIRMED DEPARTURE</span>
+              <span class="text-red-600 uppercase">Confirmed One-Way Exit</span>
             </div>
             <h3 class="text-base font-black text-zinc-950 tracking-tight flex items-center justify-center gap-1.5">
               <span id="cardOriginText">LONDON</span>
@@ -154,7 +173,7 @@ const { origins, destinations, celebrity_presets } = citiesData;
             </h3>
           </div>
 
-          <!-- Section 1: The Bleed & Sponsorship -->
+          <!-- Section 1: The Bleed & Tax Autopsy -->
           <div class="space-y-1 border-b border-dashed border-zinc-300 pb-2.5 text-[11px]">
             <div class="flex justify-between">
               <span class="text-zinc-600">GROSS SALARY:</span>
@@ -165,7 +184,7 @@ const { origins, destinations, celebrity_presets } = citiesData;
               <span id="cardNet" class="font-bold">£3,000</span>
             </div>
             <div class="flex justify-between">
-              <span class="text-zinc-600">MONTHLY RENT:</span>
+              <span class="text-zinc-600">LANDLORD CUT / MO:</span>
               <span id="cardRent" class="font-bold text-red-600">£1,650</span>
             </div>
             <div class="flex justify-between font-bold pt-1 border-t border-zinc-200">
@@ -174,17 +193,17 @@ const { origins, destinations, celebrity_presets } = citiesData;
             </div>
           </div>
 
-          <!-- Section 2: Diagnosis & Sponsorship -->
+          <!-- Section 2: Diagnosis & State Sponsorship -->
           <div class="bg-zinc-100 rounded-lg p-2.5 text-center border border-zinc-200 space-y-1">
             <span class="text-[9px] uppercase tracking-wider text-zinc-500 font-bold">DIAGNOSIS</span>
             <p id="cardDiagnosisTitle" class="text-xs font-black text-zinc-900 uppercase">
-              "Part-Time Volunteer for Your Landlord"
+              "Full-Time Volunteer for Your Landlord"
             </p>
-            <p id="cardDaysWorked" class="text-[10px] text-zinc-600">
+            <p id="cardDaysWorked" class="text-[10px] text-zinc-700">
               You work 11.9 days every month before you can afford food.
             </p>
             <p id="cardSponsorDate" class="text-[10px] text-zinc-500 pt-0.5 border-t border-zinc-200">
-              State Free Day: May 29th (Funding Potholes)
+              State Freedom Day: May 29th (Funding delays & pension deficits)
             </p>
           </div>
 
@@ -194,68 +213,133 @@ const { origins, destinations, celebrity_presets } = citiesData;
             <span id="cardBureaucracy" class="italic">Tier 4: Council Tax Direct Debit Hostage</span>
           </div>
 
-          <!-- Section 3: Housing Swap -->
+          <!-- Section 3: Housing Arbitrage (Shoebox vs Palace) -->
           <div class="border-b border-dashed border-zinc-300 pb-2.5 text-[11px] space-y-1">
-            <span class="text-[9px] uppercase tracking-wider text-zinc-400 font-bold">HOUSING ARBITRAGE</span>
+            <span class="text-[9px] uppercase tracking-wider text-zinc-400 font-bold">HOUSING SWAP (SAME RENT)</span>
             <p id="cardOriginReality" class="text-zinc-600 text-[10px]">CURRENT: Zone 3 damp basement</p>
             <p id="cardTargetReality" class="font-bold text-zinc-900 text-[10px]">EXILE: 115 sqm terrace penthouse</p>
+            <div class="flex justify-between text-[10px] pt-1 text-emerald-700 font-bold">
+              <span>MONTHLY CASH SURPLUS:</span>
+              <span id="cardCashSurplus">+£850/mo retained</span>
+            </div>
           </div>
 
-          <!-- Section 4: Cultural Hazard Notice -->
+          <!-- Section 4: Nomad Freedom & 90-Day Brexit Siren -->
+          <div id="cardNomadSection" class="border-b border-dashed border-zinc-300 pb-2.5 text-[10px] space-y-1">
+            <span class="text-[9px] uppercase tracking-wider text-zinc-500 font-bold block">LEGAL TICKET & RUNWAY:</span>
+            <p id="cardVisaRoute" class="text-zinc-900 font-bold">Spain Digital Nomad Visa (Law 28/2022)</p>
+            <div id="cardSchengenBox" class="p-1.5 bg-red-50 border border-red-200 rounded text-red-700 text-[9px]">
+              ⚠️ <strong>90-Day Brexit Siren:</strong> UK Citizens are capped at 90 days per 180 without a remote visa.
+            </div>
+          </div>
+
+          <!-- Section 5: Cultural Violation Warning -->
           <div class="border-b-2 border-dashed border-zinc-400 pb-2.5 text-[10px]">
-            <span class="text-[9px] uppercase tracking-wider text-red-600 font-bold block">CULTURAL VIOLATION WARNING:</span>
+            <span class="text-[9px] uppercase tracking-wider text-red-600 font-bold block">CULTURAL PROTOCOL PENALTY:</span>
             <p id="cardCulturalHazard" class="text-zinc-700 italic mt-0.5">
-              Ordering dinner at 7:30 PM prompts kitchen staff to lock the doors.
+              Ordering dinner at 7:30 PM prompts kitchen staff to lock doors and laugh.
             </p>
           </div>
 
           <!-- Footer & Watermark -->
           <div class="text-center pt-1">
-            <p class="text-[9px] text-zinc-500 uppercase tracking-widest">GET YOUR EXIT TICKET FREE:</p>
+            <p class="text-[9px] text-zinc-500 uppercase tracking-widest">CALCULATE YOUR ESCAPE FREE:</p>
             <p class="text-xs font-black tracking-widest text-zinc-900">EUROEXILE.VERCEL.APP</p>
           </div>
         </div>
 
-        <!-- 1-Tap Download Button -->
-        <button id="downloadPngBtn" class="mt-4 w-full max-w-sm py-3 bg-red-600 hover:bg-red-500 active:scale-95 text-white font-mono text-xs uppercase tracking-wider rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-red-600/20 font-bold">
+        <!-- 1-Tap SVG/Canvas Download -->
+        <button id="downloadPngBtn" class="mt-4 w-full max-w-sm py-3.5 bg-red-600 hover:bg-red-500 active:scale-95 text-white font-mono text-xs uppercase tracking-wider rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-red-600/20 font-bold cursor-pointer">
           <span>↓ Save 9:16 Boarding Pass (PNG)</span>
         </button>
+        <span id="downloadStatus" class="text-[10px] font-mono text-zinc-500 mt-1">Ready for Instagram Story & X export</span>
       </section>
     </div>
 
-    <!-- AdSense Content & Methodology Section -->
-    <section id="methodology" class="mt-16 border-t border-zinc-900 pt-12 text-zinc-400 text-xs md:text-sm leading-relaxed max-w-4xl mx-auto space-y-8">
-      <div>
-        <h2 class="text-xl font-bold text-white mb-2 font-mono">Methodology & Economic Analysis</h2>
-        <p>
-          EuroExile quantifies real disposable income, tax wedge friction, and housing affordability across major European metropolitan centers. By matching nominal salaries with statutory deductions and median rents, this index measures real purchasing power and migratory incentives.
-        </p>
-      </div>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-        <div class="p-4 bg-zinc-900/40 border border-zinc-800/80 rounded-xl">
-          <h3 class="font-bold text-white mb-1.5 font-mono text-xs uppercase">1. Statutory Tax Wedge</h3>
-          <p class="text-[11px] text-zinc-400 leading-normal">
-            Calculated using OECD-standard effective deductions for single workers without dependents, including national progressive income tax, local taxes, and employee social contributions.
+    <!-- The 3 Core Calculators Explanation & Breakdown -->
+    <section class="mt-14 border-t border-zinc-900 pt-10 space-y-6">
+      <h2 class="text-xl md:text-2xl font-black text-white font-mono">The 3 Unified Escape Calculators</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div class="p-5 bg-zinc-900/60 border border-zinc-800 rounded-2xl">
+          <div class="text-xs font-mono text-red-400 font-bold mb-2">CALCULATOR 1</div>
+          <h3 class="text-base font-bold text-white mb-2">The EU Bureaucracy & Tax Roaster</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Quantifies the statutory deduction wedge across single earners and freelancers. Identifies the exact calendar day you stop working for roadwork delays and civil service pensions.
           </p>
         </div>
-        <div class="p-4 bg-zinc-900/40 border border-zinc-800/80 rounded-xl">
-          <h3 class="font-bold text-white mb-1.5 font-mono text-xs uppercase">2. Landlord Servitude Metric</h3>
-          <p class="text-[11px] text-zinc-400 leading-normal">
-            Converts monthly rent into equivalent working days per month (based on standard 21.7 business days) dedicated purely to housing costs before disposable income begins.
+        <div class="p-5 bg-zinc-900/60 border border-zinc-800 rounded-2xl">
+          <div class="text-xs font-mono text-red-400 font-bold mb-2">CALCULATOR 2</div>
+          <h3 class="text-base font-bold text-white mb-2">EuroRent Reality Swap</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Calculates your landlord servitude percentage and swaps your moldy Zone 2 or Altbau studio for a terrace penthouse in Valencia, Porto, or Da Nang with hundreds in disposable surplus.
           </p>
         </div>
-        <div class="p-4 bg-zinc-900/40 border border-zinc-800/80 rounded-xl">
-          <h3 class="font-bold text-white mb-1.5 font-mono text-xs uppercase">3. Geographic Arbitrage</h3>
-          <p class="text-[11px] text-zinc-400 leading-normal">
-            Evaluates square-meter expansions and monthly liquidity surpluses when relocating remote income into recognized digital nomad legal frameworks (e.g. Spain Law 28/2022).
+        <div class="p-5 bg-zinc-900/60 border border-zinc-800 rounded-2xl">
+          <div class="text-xs font-mono text-red-400 font-bold mb-2">CALCULATOR 3</div>
+          <h3 class="text-base font-bold text-white mb-2">EuroPassport & Nomad Index</h3>
+          <p class="text-xs text-zinc-400 leading-relaxed">
+            Toggles your passport status (UK, EU, or Global), activates the 90-day post-Brexit Schengen countdown siren, and verifies legal residency routes like Spain's Law 28/2022.
           </p>
         </div>
       </div>
+    </section>
 
-      <!-- Footer Links for AdSense Compliance -->
+    <!-- Comprehensive Questions & Answers (Interactive FAQ) -->
+    <section id="qa-section" class="mt-14 border-t border-zinc-900 pt-10">
+      <h2 class="text-xl md:text-2xl font-black text-white font-mono mb-4">Frequently Answered Questions</h2>
+      <p class="text-xs md:text-sm text-zinc-400 mb-6">Detailed insights into European cost arbitrage, tax wedge metrics, and legal nomad migration.</p>
+
+      <div class="space-y-4 max-w-4xl">
+        <details class="group bg-zinc-900/40 border border-zinc-800 rounded-xl p-4 transition [&_svg]:open:-rotate-180">
+          <summary class="flex justify-between items-center cursor-pointer list-none font-bold text-sm text-zinc-200">
+            <span>How is the "Landlord Harvest" and servitude days calculated?</span>
+            <svg class="w-4 h-4 transition duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+          </summary>
+          <p class="text-xs text-zinc-400 mt-3 leading-relaxed">
+            The landlord harvest represents the fraction of net take-home salary consumed by rent: (Rent / Net Salary) * 100. Servitude days are calculated against the standard OECD metric of 21.7 working days per month. If your ratio is 55%, you spend 11.9 full business days working solely to fund your landlord's mortgage before purchasing food or utilities.
+          </p>
+        </details>
+
+        <details class="group bg-zinc-900/40 border border-zinc-800 rounded-xl p-4 transition [&_svg]:open:-rotate-180">
+          <summary class="flex justify-between items-center cursor-pointer list-none font-bold text-sm text-zinc-200">
+            <span>What is the 90-Day Brexit Siren for UK passport holders?</span>
+            <svg class="w-4 h-4 transition duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+          </summary>
+          <p class="text-xs text-zinc-400 mt-3 leading-relaxed">
+            Post-Brexit, British citizens are limited to 90 days within any rolling 180-day window inside the Schengen Area without an official visa. To relocate long-term, UK remote workers must apply for specific national digital nomad pathways, such as Spain's Law 28/2022 or Portugal's D8 visa, which require minimum income proofs (~€2,600/month in Spain).
+          </p>
+        </details>
+
+        <details class="group bg-zinc-900/40 border border-zinc-800 rounded-xl p-4 transition [&_svg]:open:-rotate-180">
+          <summary class="flex justify-between items-center cursor-pointer list-none font-bold text-sm text-zinc-200">
+            <span>Can I keep my remote contract when moving to Southern Europe or Southeast Asia?</span>
+            <svg class="w-4 h-4 transition duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+          </summary>
+          <p class="text-xs text-zinc-400 mt-3 leading-relaxed">
+            Most digital nomad visa programs (such as in Spain, Portugal, and Croatia) permit individuals to retain non-resident employment contracts or operate as independent contractors invoicing foreign corporations, provided their primary tax residency complies with local qualifying frameworks.
+          </p>
+        </details>
+
+        <details class="group bg-zinc-900/40 border border-zinc-800 rounded-xl p-4 transition [&_svg]:open:-rotate-180">
+          <summary class="flex justify-between items-center cursor-pointer list-none font-bold text-sm text-zinc-200">
+            <span>Is user financial data logged or transferred to servers?</span>
+            <svg class="w-4 h-4 transition duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" /></svg>
+          </summary>
+          <p class="text-xs text-zinc-400 mt-3 leading-relaxed">
+            No. The EuroExile engine executes 100% client-side in your local browser window. There are zero tracking cookies, no server-side databases, and no telemetry sent over the wire.
+          </p>
+        </details>
+      </div>
+    </section>
+
+    <!-- AdSense Compliant Methodology Section -->
+    <section id="methodology" class="mt-14 border-t border-zinc-900 pt-8 text-zinc-400 text-xs md:text-sm leading-relaxed max-w-4xl mx-auto space-y-6">
+      <h2 class="text-lg font-bold text-white font-mono">Methodology & Statutory Benchmarks</h2>
+      <p>
+        Tax wedge figures model OECD single-worker profiles without dependents and include progressive income tax, social security withholdings, and mandatory local surcharges. Housing medians represent Q1 2026 rental averages across primary metropolitan districts.
+      </p>
       <footer class="border-t border-zinc-900 pt-6 text-zinc-500 text-xs flex flex-col md:flex-row justify-between items-center gap-3">
-        <p>© 2026 EuroExile. Educational and satirical cost-of-living index. Zero personal data tracked.</p>
+        <p>© 2026 EuroExile. Educational and satirical cost-of-living index.</p>
         <div class="flex gap-4">
           <a href="#" class="hover:text-zinc-300">Privacy Policy</a>
           <a href="#" class="hover:text-zinc-300">Terms of Service</a>
@@ -270,6 +354,9 @@ const { origins, destinations, celebrity_presets } = citiesData;
     const originMap = Object.fromEntries(origins.map(o => [o.id, o]));
     const destMap = Object.fromEntries(destinations.map(d => [d.id, d]));
 
+    let currentPassport = "UK";
+    let currentTaxModifier = 1.0;
+
     const originSelect = document.getElementById('originSelect');
     const targetSelect = document.getElementById('targetSelect');
     const salaryRange = document.getElementById('salaryRange');
@@ -280,6 +367,7 @@ const { origins, destinations, celebrity_presets } = citiesData;
     const rentVal = document.getElementById('rentVal');
     const monthsVal = document.getElementById('monthsVal');
     const totalRentPaidText = document.getElementById('totalRentPaidText');
+    const cardSchengenBox = document.getElementById('cardSchengenBox');
 
     function updateLabels() {
       const orig = originMap[originSelect.value];
@@ -297,10 +385,12 @@ const { origins, destinations, celebrity_presets } = citiesData;
       const gross = Number(salaryRange.value);
       const rent = Number(rentRange.value);
 
-      const annualNet = gross * (1 - orig.tax_wedge);
-      const monthlyNet = Math.round(annualNet / 12);
+      const effectiveTaxRate = orig.tax_wedge * currentTaxModifier;
+      const annualNet = gross * (1 - effectiveTaxRate);
+      const monthlyNet = Math.max(1, Math.round(annualNet / 12));
       const harvestPercent = ((rent / monthlyNet) * 100).toFixed(1);
-      const daysWorked = ((rent / monthlyNet) * 21.7).toFixed(1);
+      const daysWorked = Math.min(21.7, (rent / monthlyNet) * 21.7).toFixed(1);
+      const cashSurplus = Math.round(rent - dest.median_rent);
 
       // Card Updates
       document.getElementById('cardOriginText').textContent = orig.name.toUpperCase();
@@ -322,21 +412,60 @@ const { origins, destinations, celebrity_presets } = citiesData;
       document.getElementById('cardDaysWorked').textContent = 
         `You work ${daysWorked} days every month before you can afford food.`;
       document.getElementById('cardSponsorDate').textContent = 
-        `State Free Day: ${orig.state_sponsor_date} (${orig.state_sponsor_program})`;
+        `State Freedom Day: ${orig.state_sponsor_date} (${orig.state_sponsor_program})`;
       document.getElementById('cardBureaucracy').textContent = orig.paperwork_index;
       document.getElementById('cardOriginReality').textContent = `CURRENT: ${orig.housing_reality}`;
       document.getElementById('cardTargetReality').textContent = `EXILE: ${dest.living_reality}`;
+      document.getElementById('cardCashSurplus').textContent = 
+        cashSurplus > 0 ? `+${orig.symbol}${cashSurplus}/mo retained` : `Equivalent housing rate`;
+      
+      document.getElementById('cardVisaRoute').textContent = dest.visa_scheme;
       document.getElementById('cardCulturalHazard').textContent = dest.cultural_hazard;
+
+      // Nomad 90-Day Warning Logic
+      if (currentPassport === "UK" && dest.country !== "United Kingdom") {
+        cardSchengenBox.style.display = "block";
+      } else {
+        cardSchengenBox.style.display = "none";
+      }
     }
 
-    // Input events
+    // Passport Toggles
+    document.querySelectorAll('.passport-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.passport-btn').forEach(b => {
+          b.classList.remove('bg-red-600', 'text-white', 'font-bold', 'active');
+          b.classList.add('text-zinc-400');
+        });
+        btn.classList.add('bg-red-600', 'text-white', 'font-bold', 'active');
+        btn.classList.remove('text-zinc-400');
+        currentPassport = btn.dataset.val;
+        recalculate();
+      });
+    });
+
+    // Life Status Toggles
+    document.querySelectorAll('.status-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.status-btn').forEach(b => {
+          b.classList.remove('bg-zinc-800', 'text-white', 'font-bold', 'active');
+          b.classList.add('text-zinc-400');
+        });
+        btn.classList.add('bg-zinc-800', 'text-white', 'font-bold', 'active');
+        btn.classList.remove('text-zinc-400');
+        currentTaxModifier = parseFloat(btn.dataset.taxmod);
+        recalculate();
+      });
+    });
+
+    // Sliders & Selects
     originSelect.addEventListener('change', () => { updateLabels(); recalculate(); });
     targetSelect.addEventListener('change', recalculate);
     salaryRange.addEventListener('input', () => { updateLabels(); recalculate(); });
     rentRange.addEventListener('input', () => { updateLabels(); recalculate(); });
     monthsRange.addEventListener('input', () => { updateLabels(); });
 
-    // Presets
+    // Celebrity Presets
     document.querySelectorAll('.preset-btn').forEach(btn => {
       btn.addEventListener('click', () => {
         originSelect.value = btn.dataset.origin;
@@ -348,20 +477,62 @@ const { origins, destinations, celebrity_presets } = citiesData;
       });
     });
 
-    // 1-Tap PNG Download
+    // Native High-Res PNG Generator (Zero External Library Flaws)
     document.getElementById('downloadPngBtn').addEventListener('click', () => {
       const card = document.getElementById('receiptWrapper');
-      if (window.html2canvas) {
-        window.html2canvas(card, { scale: 3, backgroundColor: null }).then(canvas => {
-          const a = document.createElement('a');
-          a.download = `euroexile-${originSelect.value}-to-${targetSelect.value}.png`;
-          a.href = canvas.toDataURL('image/png');
-          a.click();
-        });
-      }
+      const downloadStatus = document.getElementById('downloadStatus');
+      downloadStatus.textContent = "Rendering high-res card...";
+
+      const clone = card.cloneNode(true);
+      clone.style.width = "400px";
+      clone.style.padding = "24px";
+      clone.style.fontFamily = "monospace";
+      clone.style.backgroundColor = "#ffffff";
+      clone.style.color = "#000000";
+
+      const wrapper = document.createElement("div");
+      wrapper.setAttribute("xmlns", "http://www.w3.org/1999/xhtml");
+      wrapper.appendChild(clone);
+
+      const htmlString = new XMLSerializer().serializeToString(wrapper);
+      const svg = `
+        <svg xmlns="http://www.w3.org/2000/svg" width="450" height="780">
+          <foreignObject width="100%" height="100%">
+            ${htmlString}
+          </foreignObject>
+        </svg>
+      `;
+
+      const img = new Image();
+      const svgBlob = new Blob([svg], { type: "image/svg+xml;charset=utf-8" });
+      const url = URL.createObjectURL(svgBlob);
+
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = 450 * 2;
+        canvas.height = 780 * 2;
+        const ctx = canvas.getContext("2d");
+        ctx.scale(2, 2);
+        ctx.drawImage(img, 0, 0);
+
+        const a = document.createElement("a");
+        a.download = `euroexile-${originSelect.value}-to-${targetSelect.value}.png`;
+        a.href = canvas.toDataURL("image/png");
+        a.click();
+        URL.revokeObjectURL(url);
+        downloadStatus.textContent = "Downloaded successfully!";
+        setTimeout(() => { downloadStatus.textContent = "Ready for Instagram Story & X export"; }, 3000);
+      };
+
+      img.onerror = () => {
+        downloadStatus.textContent = "Export fallback triggered.";
+        window.print();
+      };
+
+      img.src = url;
     });
 
-    // Initialize
+    // Initialize on page load
     updateLabels();
     recalculate();
   </script>
