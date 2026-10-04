@@ -1,0 +1,213 @@
+---
+import citiesData from '../../data/cities.json';
+
+export async function getStaticPaths() {
+  const { origins, destinations } = citiesData;
+  const paths = [];
+
+  for (const origin of origins) {
+    for (const destination of destinations) {
+      paths.push({
+        params: {
+          origin: origin.id,
+          target: destination.id
+        },
+        props: { origin, destination }
+      });
+    }
+  }
+
+  return paths;
+}
+
+const { origin, destination } = Astro.props;
+const { origins, destinations } = citiesData;
+
+// Financial & Housing Computations
+const grossSalaryBenchmark = origin.currency === 'GBP' ? 52000 : 50000;
+const annualNet = grossSalaryBenchmark * (1 - origin.tax_wedge);
+const monthlyNet = Math.round(annualNet / 12);
+const landlordShare = ((origin.median_rent / monthlyNet) * 100).toFixed(1);
+const servitudeDays = ((origin.median_rent / monthlyNet) * 21.7).toFixed(1);
+const spaceGain = Math.round(((destination.avg_sqm - origin.avg_sqm) / origin.avg_sqm) * 100);
+
+// Dynamic internal links to maintain an automated crawl web
+const siblingDestinations = destinations.filter(d => d.id !== destination.id);
+const otherOrigins = origins.filter(o => o.id !== origin.id);
+---
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Moving from {origin.name} to {destination.name}? Cost of Living & Tax Arbitrage (2026)</title>
+  <meta name="description" content={`Compare net income, housing square meters, tax wedges, and nomad visa rules between ${origin.name} and ${destination.name}.`} />
+  
+  <link rel="canonical" href={`https://euroexile.vercel.app/compare/${origin.id}-to-${destination.id}`} />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <!-- Structured FAQ Schema for Google Rich Snippets -->
+  <script type="application/ld+json" set:html={JSON.stringify({
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": `How much cheaper is rent in ${destination.name} compared to ${origin.name}?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": `Median rent in ${destination.name} is ${destination.symbol}${destination.median_rent}/month compared to ${origin.symbol}${origin.median_rent}/month in ${origin.name}, providing approximately ${spaceGain}% more living space.`
+        }
+      },
+      {
+        "@type": "Question",
+        "name": `What is the legal visa route for moving to ${destination.name}?`,
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": destination.visa_scheme
+        }
+      }
+    ]
+  })} />
+</head>
+<body class="bg-zinc-950 text-zinc-100 font-['Inter',sans-serif] min-h-screen selection:bg-red-500 selection:text-white">
+  
+  <!-- Navigation Header -->
+  <nav class="border-b border-zinc-900 bg-zinc-950/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-4xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="font-black text-lg tracking-tight text-white">
+        EURO<span class="text-red-500">EXILE</span>
+      </a>
+      <a href="/" class="text-xs font-mono text-zinc-400 hover:text-white transition">
+        ← Open Full Calculator
+      </a>
+    </div>
+  </nav>
+
+  <main class="max-w-4xl mx-auto px-4 py-10 md:py-14">
+    <!-- Breadcrumb Hierarchy for SEO -->
+    <nav class="text-xs font-mono text-zinc-500 mb-6 flex items-center gap-2">
+      <a href="/" class="hover:text-zinc-300">Home</a>
+      <span>/</span>
+      <span>Compare</span>
+      <span>/</span>
+      <span class="text-red-400">{origin.name} to {destination.name}</span>
+    </nav>
+
+    <!-- Header Section -->
+    <header class="mb-10">
+      <div class="inline-block px-3 py-1 bg-red-950/40 border border-red-500/20 text-red-400 text-xs font-mono font-bold uppercase rounded-full mb-3">
+        Geographic Arbitrage Report
+      </div>
+      <h1 class="text-3xl md:text-5xl font-black text-white tracking-tight mb-4">
+        {origin.name} vs {destination.name}: Cost of Living & Exit Reality
+      </h1>
+      <p class="text-zinc-400 text-sm md:text-base leading-relaxed">
+        An empirical and satirical economic audit of leaving {origin.name} ({origin.country}) for {destination.name} ({destination.country}).
+      </p>
+    </header>
+
+    <!-- Comparison Matrix Table (AdSense Substantive Content) -->
+    <section class="bg-zinc-900/60 border border-zinc-800 rounded-2xl overflow-hidden mb-10 shadow-xl">
+      <div class="p-5 md:p-6 border-b border-zinc-800">
+        <h2 class="text-base font-bold text-white">The Economic Ledger ({origin.symbol}{grossSalaryBenchmark.toLocaleString()} Benchmark)</h2>
+      </div>
+      <div class="overflow-x-auto">
+        <table class="w-full text-left text-xs md:text-sm font-mono">
+          <thead class="bg-zinc-950 text-zinc-400 border-b border-zinc-800 uppercase text-[11px]">
+            <tr>
+              <th class="p-4">Key Metric</th>
+              <th class="p-4 text-red-400">{origin.name} (Origin)</th>
+              <th class="p-4 text-emerald-400">{destination.name} (Exile)</th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-zinc-800/60 text-zinc-300">
+            <tr>
+              <td class="p-4 font-sans text-zinc-400">Median Monthly Rent</td>
+              <td class="p-4 font-bold">{origin.symbol}{origin.median_rent}</td>
+              <td class="p-4 font-bold text-emerald-400">{destination.symbol}{destination.median_rent}</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-sans text-zinc-400">Estimated Living Space</td>
+              <td class="p-4">{origin.avg_sqm} m²</td>
+              <td class="p-4 text-emerald-400 font-bold">{destination.avg_sqm} m² (+{spaceGain}%)</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-sans text-zinc-400">Landlord Servitude</td>
+              <td class="p-4 text-red-400">{servitudeDays} days / mo</td>
+              <td class="p-4 text-emerald-400 font-bold">{((destination.median_rent / monthlyNet) * 21.7).toFixed(1)} days / mo</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-sans text-zinc-400">Bureaucracy / Tax Class</td>
+              <td class="p-4 text-xs">{origin.paperwork_index}</td>
+              <td class="p-4 text-xs text-emerald-400">{destination.visa_scheme}</td>
+            </tr>
+            <tr>
+              <td class="p-4 font-sans text-zinc-400">Annual Sunshine</td>
+              <td class="p-4">~150 days</td>
+              <td class="p-4 text-amber-400 font-bold">{destination.sunny_days} days / year</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- Side-by-Side Housing Breakdown -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-5 mb-10">
+      <div class="p-5 md:p-6 bg-red-950/20 border border-red-500/20 rounded-2xl">
+        <h3 class="text-xs font-mono uppercase text-red-400 font-bold mb-2">The {origin.name} Reality</h3>
+        <p class="text-sm text-zinc-300 mb-3">{origin.housing_reality}.</p>
+        <p class="text-xs text-zinc-500 font-mono">Tax Sponsor Date: {origin.state_sponsor_date} ({origin.state_sponsor_program})</p>
+      </div>
+      <div class="p-5 md:p-6 bg-emerald-950/20 border border-emerald-500/20 rounded-2xl">
+        <h3 class="text-xs font-mono uppercase text-emerald-400 font-bold mb-2">The {destination.name} Reality</h3>
+        <p class="text-sm text-zinc-300 mb-3">{destination.living_reality}.</p>
+        <p class="text-xs text-amber-400/90 font-mono">Cultural Friction: {destination.cultural_hazard}</p>
+      </div>
+    </section>
+
+    <!-- Recalculate CTA -->
+    <div class="text-center p-8 bg-zinc-900 border border-zinc-800 rounded-2xl mb-12">
+      <h3 class="text-lg md:text-xl font-bold text-white mb-2">Want to simulate your exact paycheck?</h3>
+      <p class="text-zinc-400 text-xs md:text-sm mb-6 max-w-lg mx-auto">
+        Adjust salary sliders, check your landlord servitude percentage, and download your customized 9:16 exit pass.
+      </p>
+      <a href="/" class="inline-block px-6 py-3.5 bg-red-600 hover:bg-red-500 font-bold text-xs uppercase tracking-widest font-mono rounded-xl transition text-white shadow-lg shadow-red-600/20">
+        Open Interactive Calculator
+      </a>
+    </div>
+
+    <!-- Automated Internal Linking Matrix (Search Crawl Network) -->
+    <footer class="border-t border-zinc-900 pt-8 space-y-6">
+      <div>
+        <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-500 mb-3 font-semibold">
+          Alternative Escape Routes from {origin.name}:
+        </h4>
+        <div class="flex flex-wrap gap-2">
+          {siblingDestinations.map(d => (
+            <a href={`/compare/${origin.id}-to-${d.id}`} class="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-xs font-mono text-zinc-300 transition">
+              {origin.name} → {d.name}
+            </a>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h4 class="text-xs font-mono uppercase tracking-wider text-zinc-500 mb-3 font-semibold">
+          Other Origin Hubs Relocating to {destination.name}:
+        </h4>
+        <div class="flex flex-wrap gap-2">
+          {otherOrigins.map(o => (
+            <a href={`/compare/${o.id}-to-${destination.id}`} class="px-3 py-1.5 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 rounded-lg text-xs font-mono text-zinc-300 transition">
+              {o.name} → {destination.name}
+            </a>
+          ))}
+        </div>
+      </div>
+    </footer>
+  </main>
+</body>
+</html>

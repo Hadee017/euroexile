@@ -1,17 +1,368 @@
 ---
-
+import citiesData from '../data/cities.json';
+const { origins, destinations, celebrity_presets } = citiesData;
 ---
 
+<!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="utf-8" />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
-		<meta name="viewport" content="width=device-width" />
-		<meta name="generator" content={Astro.generator} />
-		<title>Astro</title>
-	</head>
-	<body>
-		<h1>Astro</h1>
-	</body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>EuroExile | Financial Autopsy & Escape Calculator</title>
+  <meta name="description" content="Calculate your true net income after European taxes, landlord servitude days, and generate your viral exit ticket." />
+  
+  <link rel="canonical" href="https://euroexile.vercel.app/" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+  <script is:inline src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+
+  <style>
+    .font-mono-receipt { font-family: 'Space Mono', monospace; }
+  </style>
+</head>
+<body class="bg-zinc-950 text-zinc-100 font-['Inter',sans-serif] min-h-screen selection:bg-red-500 selection:text-white">
+
+  <!-- Minimal Nav -->
+  <nav class="border-b border-zinc-900 bg-zinc-950/80 backdrop-blur sticky top-0 z-50">
+    <div class="max-w-5xl mx-auto px-4 h-14 flex items-center justify-between">
+      <a href="/" class="font-black text-lg tracking-tight flex items-center gap-1.5 text-white">
+        EURO<span class="text-red-500">EXILE</span>
+      </a>
+      <div class="flex items-center gap-4 text-xs font-mono text-zinc-400">
+        <a href="#audit" class="hover:text-white transition">Autopsy</a>
+        <a href="#methodology" class="hover:text-white transition">Methodology</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Hero Header -->
+  <header class="py-10 md:py-14 text-center px-4 max-w-3xl mx-auto">
+    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-red-950/40 border border-red-500/20 text-red-400 text-xs font-mono font-semibold mb-4">
+      <span class="inline-block w-2 h-2 rounded-full bg-red-500 animate-pulse"></span>
+      Zero Data Stored • 100% Client-Side Engine
+    </div>
+    <h1 class="text-3xl md:text-5xl font-black tracking-tight text-white mb-3">
+      How much of your life belongs to your <span class="text-red-500 underline decoration-red-500/30">landlord</span>?
+    </h1>
+    <p class="text-zinc-400 text-xs md:text-sm max-w-xl mx-auto">
+      Calculate your tax bleed, discover the exact day you start earning for yourself, and print your satirical exit ticket.
+    </p>
+
+    <!-- Celebrity / Preset Bar -->
+    <div class="mt-6 flex flex-wrap justify-center items-center gap-2">
+      <span class="text-[11px] font-mono uppercase text-zinc-500 mr-1">Presets:</span>
+      {celebrity_presets.map((preset) => (
+        <button
+          type="button"
+          data-origin={preset.origin}
+          data-target={preset.target}
+          data-salary={preset.salary}
+          data-rent={preset.rent}
+          class="preset-btn px-2.5 py-1 bg-zinc-900 hover:bg-zinc-800 border border-zinc-800 hover:border-zinc-700 rounded-md text-[11px] font-mono text-zinc-300 transition"
+        >
+          {preset.label}
+        </button>
+      ))}
+    </div>
+  </header>
+
+  <!-- Calculator & Artifact Container -->
+  <main id="audit" class="max-w-5xl mx-auto px-4 pb-16">
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+      
+      <!-- Input Panel (Touch Optimized for Mobile) -->
+      <section class="lg:col-span-6 bg-zinc-900/60 border border-zinc-800 p-6 md:p-8 rounded-2xl shadow-xl space-y-5">
+        <div class="border-b border-zinc-800 pb-3">
+          <h2 class="text-sm font-bold uppercase tracking-wider text-white font-mono">1. The Financial Reality Input</h2>
+          <p class="text-xs text-zinc-400 mt-0.5">Move sliders to run the live calculation.</p>
+        </div>
+
+        <!-- Origin City -->
+        <div>
+          <label for="originSelect" class="block text-xs font-mono uppercase text-zinc-400 mb-1 font-semibold">Origin Hub (Where you're trapped)</label>
+          <select id="originSelect" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-red-500 transition">
+            {origins.map((o) => (
+              <option value={o.id}>{o.name} ({o.country}) [{o.symbol}]</option>
+            ))}
+          </select>
+        </div>
+
+        <!-- Gross Salary Slider -->
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label for="salaryRange" class="text-xs font-mono uppercase text-zinc-400 font-semibold">Gross Annual Salary</label>
+            <span id="salaryVal" class="text-sm font-bold font-mono text-red-400">£50,000</span>
+          </div>
+          <input type="range" id="salaryRange" min="20000" max="150000" step="1000" value="50000"
+                 class="w-full accent-red-500 bg-zinc-800 h-2 rounded-lg cursor-pointer" />
+        </div>
+
+        <!-- Rent Slider -->
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label for="rentRange" class="text-xs font-mono uppercase text-zinc-400 font-semibold">Monthly Rent Paid</label>
+            <span id="rentVal" class="text-sm font-bold font-mono text-red-400">£1,650</span>
+          </div>
+          <input type="range" id="rentRange" min="300" max="4000" step="50" value="1650"
+                 class="w-full accent-red-500 bg-zinc-800 h-2 rounded-lg cursor-pointer" />
+        </div>
+
+        <!-- Months in Apartment Slider (Powers Slap Your Landlord Metric) -->
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label for="monthsRange" class="text-xs font-mono uppercase text-zinc-400 font-semibold">Time in Current Flat</label>
+            <span id="monthsVal" class="text-sm font-bold font-mono text-zinc-300">24 months</span>
+          </div>
+          <input type="range" id="monthsRange" min="1" max="72" step="1" value="24"
+                 class="w-full accent-zinc-500 bg-zinc-800 h-2 rounded-lg cursor-pointer" />
+        </div>
+
+        <!-- Target Destination -->
+        <div>
+          <label for="targetSelect" class="block text-xs font-mono uppercase text-zinc-400 mb-1 font-semibold">Select Escape Target</label>
+          <select id="targetSelect" class="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-4 py-3 text-white text-sm focus:outline-none focus:border-red-500 transition">
+            {destinations.map((d) => (
+              <option value={d.id}>{d.name} ({d.country})</option>
+            ))}
+          </select>
+        </div>
+
+        <!-- Quick Slap Landlord Stat -->
+        <div class="p-3.5 bg-red-950/20 border border-red-500/20 rounded-xl text-center">
+          <p class="text-[10px] font-mono uppercase text-zinc-400">Total Transferred to Landlord's Wealth:</p>
+          <p id="totalRentPaidText" class="text-lg font-black font-mono text-red-400">£39,600</p>
+          <p class="text-[10px] text-zinc-500 italic mt-0.5">They used this to finance their holiday home.</p>
+        </div>
+      </section>
+
+      <!-- Output Artifact: The Official Boarding Pass (9:16 Optimized) -->
+      <section class="lg:col-span-6 flex flex-col items-center">
+        <div id="receiptWrapper" class="w-full max-w-sm bg-white text-zinc-950 rounded-2xl p-6 shadow-2xl border border-zinc-200 font-mono-receipt text-xs space-y-3.5">
+          
+          <!-- Header -->
+          <div class="border-b-2 border-dashed border-zinc-400 pb-3 text-center">
+            <div class="flex justify-between items-center text-[10px] text-zinc-500 mb-1 font-bold">
+              <span>BOARDING PASS #09284</span>
+              <span class="text-red-600">CONFIRMED DEPARTURE</span>
+            </div>
+            <h3 class="text-base font-black text-zinc-950 tracking-tight flex items-center justify-center gap-1.5">
+              <span id="cardOriginText">LONDON</span>
+              <span class="text-red-600 font-sans">──►</span>
+              <span id="cardTargetText">VALENCIA</span>
+            </h3>
+          </div>
+
+          <!-- Section 1: The Bleed & Sponsorship -->
+          <div class="space-y-1 border-b border-dashed border-zinc-300 pb-2.5 text-[11px]">
+            <div class="flex justify-between">
+              <span class="text-zinc-600">GROSS SALARY:</span>
+              <span id="cardGross" class="font-bold">£50,000</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-zinc-600">EST. NET / MONTH:</span>
+              <span id="cardNet" class="font-bold">£3,000</span>
+            </div>
+            <div class="flex justify-between">
+              <span class="text-zinc-600">MONTHLY RENT:</span>
+              <span id="cardRent" class="font-bold text-red-600">£1,650</span>
+            </div>
+            <div class="flex justify-between font-bold pt-1 border-t border-zinc-200">
+              <span>LANDLORD HARVEST:</span>
+              <span id="cardHarvestRatio" class="text-red-600">55.0%</span>
+            </div>
+          </div>
+
+          <!-- Section 2: Diagnosis & Sponsorship -->
+          <div class="bg-zinc-100 rounded-lg p-2.5 text-center border border-zinc-200 space-y-1">
+            <span class="text-[9px] uppercase tracking-wider text-zinc-500 font-bold">DIAGNOSIS</span>
+            <p id="cardDiagnosisTitle" class="text-xs font-black text-zinc-900 uppercase">
+              "Part-Time Volunteer for Your Landlord"
+            </p>
+            <p id="cardDaysWorked" class="text-[10px] text-zinc-600">
+              You work 11.9 days every month before you can afford food.
+            </p>
+            <p id="cardSponsorDate" class="text-[10px] text-zinc-500 pt-0.5 border-t border-zinc-200">
+              State Free Day: May 29th (Funding Potholes)
+            </p>
+          </div>
+
+          <!-- Bureaucracy Rating -->
+          <div class="text-[10px] text-zinc-600 border-b border-dashed border-zinc-300 pb-2">
+            <span class="text-[9px] font-bold text-zinc-500 uppercase block">BUREAUCRACY PURGATORY:</span>
+            <span id="cardBureaucracy" class="italic">Tier 4: Council Tax Direct Debit Hostage</span>
+          </div>
+
+          <!-- Section 3: Housing Swap -->
+          <div class="border-b border-dashed border-zinc-300 pb-2.5 text-[11px] space-y-1">
+            <span class="text-[9px] uppercase tracking-wider text-zinc-400 font-bold">HOUSING ARBITRAGE</span>
+            <p id="cardOriginReality" class="text-zinc-600 text-[10px]">CURRENT: Zone 3 damp basement</p>
+            <p id="cardTargetReality" class="font-bold text-zinc-900 text-[10px]">EXILE: 115 sqm terrace penthouse</p>
+          </div>
+
+          <!-- Section 4: Cultural Hazard Notice -->
+          <div class="border-b-2 border-dashed border-zinc-400 pb-2.5 text-[10px]">
+            <span class="text-[9px] uppercase tracking-wider text-red-600 font-bold block">CULTURAL VIOLATION WARNING:</span>
+            <p id="cardCulturalHazard" class="text-zinc-700 italic mt-0.5">
+              Ordering dinner at 7:30 PM prompts kitchen staff to lock the doors.
+            </p>
+          </div>
+
+          <!-- Footer & Watermark -->
+          <div class="text-center pt-1">
+            <p class="text-[9px] text-zinc-500 uppercase tracking-widest">GET YOUR EXIT TICKET FREE:</p>
+            <p class="text-xs font-black tracking-widest text-zinc-900">EUROEXILE.VERCEL.APP</p>
+          </div>
+        </div>
+
+        <!-- 1-Tap Download Button -->
+        <button id="downloadPngBtn" class="mt-4 w-full max-w-sm py-3 bg-red-600 hover:bg-red-500 active:scale-95 text-white font-mono text-xs uppercase tracking-wider rounded-xl transition flex items-center justify-center gap-2 shadow-lg shadow-red-600/20 font-bold">
+          <span>↓ Save 9:16 Boarding Pass (PNG)</span>
+        </button>
+      </section>
+    </div>
+
+    <!-- AdSense Content & Methodology Section -->
+    <section id="methodology" class="mt-16 border-t border-zinc-900 pt-12 text-zinc-400 text-xs md:text-sm leading-relaxed max-w-4xl mx-auto space-y-8">
+      <div>
+        <h2 class="text-xl font-bold text-white mb-2 font-mono">Methodology & Economic Analysis</h2>
+        <p>
+          EuroExile quantifies real disposable income, tax wedge friction, and housing affordability across major European metropolitan centers. By matching nominal salaries with statutory deductions and median rents, this index measures real purchasing power and migratory incentives.
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div class="p-4 bg-zinc-900/40 border border-zinc-800/80 rounded-xl">
+          <h3 class="font-bold text-white mb-1.5 font-mono text-xs uppercase">1. Statutory Tax Wedge</h3>
+          <p class="text-[11px] text-zinc-400 leading-normal">
+            Calculated using OECD-standard effective deductions for single workers without dependents, including national progressive income tax, local taxes, and employee social contributions.
+          </p>
+        </div>
+        <div class="p-4 bg-zinc-900/40 border border-zinc-800/80 rounded-xl">
+          <h3 class="font-bold text-white mb-1.5 font-mono text-xs uppercase">2. Landlord Servitude Metric</h3>
+          <p class="text-[11px] text-zinc-400 leading-normal">
+            Converts monthly rent into equivalent working days per month (based on standard 21.7 business days) dedicated purely to housing costs before disposable income begins.
+          </p>
+        </div>
+        <div class="p-4 bg-zinc-900/40 border border-zinc-800/80 rounded-xl">
+          <h3 class="font-bold text-white mb-1.5 font-mono text-xs uppercase">3. Geographic Arbitrage</h3>
+          <p class="text-[11px] text-zinc-400 leading-normal">
+            Evaluates square-meter expansions and monthly liquidity surpluses when relocating remote income into recognized digital nomad legal frameworks (e.g. Spain Law 28/2022).
+          </p>
+        </div>
+      </div>
+
+      <!-- Footer Links for AdSense Compliance -->
+      <footer class="border-t border-zinc-900 pt-6 text-zinc-500 text-xs flex flex-col md:flex-row justify-between items-center gap-3">
+        <p>© 2026 EuroExile. Educational and satirical cost-of-living index. Zero personal data tracked.</p>
+        <div class="flex gap-4">
+          <a href="#" class="hover:text-zinc-300">Privacy Policy</a>
+          <a href="#" class="hover:text-zinc-300">Terms of Service</a>
+          <a href="#" class="hover:text-zinc-300">Contact</a>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <!-- Client-Side Engine Script -->
+  <script define:vars={{ origins, destinations }}>
+    const originMap = Object.fromEntries(origins.map(o => [o.id, o]));
+    const destMap = Object.fromEntries(destinations.map(d => [d.id, d]));
+
+    const originSelect = document.getElementById('originSelect');
+    const targetSelect = document.getElementById('targetSelect');
+    const salaryRange = document.getElementById('salaryRange');
+    const rentRange = document.getElementById('rentRange');
+    const monthsRange = document.getElementById('monthsRange');
+    
+    const salaryVal = document.getElementById('salaryVal');
+    const rentVal = document.getElementById('rentVal');
+    const monthsVal = document.getElementById('monthsVal');
+    const totalRentPaidText = document.getElementById('totalRentPaidText');
+
+    function updateLabels() {
+      const orig = originMap[originSelect.value];
+      salaryVal.textContent = `${orig.symbol}${Number(salaryRange.value).toLocaleString()}`;
+      rentVal.textContent = `${orig.symbol}${Number(rentRange.value).toLocaleString()}`;
+      monthsVal.textContent = `${monthsRange.value} months`;
+      
+      const totalPaid = Number(rentRange.value) * Number(monthsRange.value);
+      totalRentPaidText.textContent = `${orig.symbol}${totalPaid.toLocaleString()}`;
+    }
+
+    function recalculate() {
+      const orig = originMap[originSelect.value];
+      const dest = destMap[targetSelect.value];
+      const gross = Number(salaryRange.value);
+      const rent = Number(rentRange.value);
+
+      const annualNet = gross * (1 - orig.tax_wedge);
+      const monthlyNet = Math.round(annualNet / 12);
+      const harvestPercent = ((rent / monthlyNet) * 100).toFixed(1);
+      const daysWorked = ((rent / monthlyNet) * 21.7).toFixed(1);
+
+      // Card Updates
+      document.getElementById('cardOriginText').textContent = orig.name.toUpperCase();
+      document.getElementById('cardTargetText').textContent = dest.name.toUpperCase();
+      document.getElementById('cardGross').textContent = `${orig.symbol}${gross.toLocaleString()}`;
+      document.getElementById('cardNet').textContent = `${orig.symbol}${monthlyNet.toLocaleString()}`;
+      document.getElementById('cardRent').textContent = `${orig.symbol}${rent.toLocaleString()}`;
+      document.getElementById('cardHarvestRatio').textContent = `${harvestPercent}%`;
+
+      const diagTitle = document.getElementById('cardDiagnosisTitle');
+      if (harvestPercent > 50) {
+        diagTitle.textContent = '"Full-Time Volunteer for Your Landlord"';
+      } else if (harvestPercent > 35) {
+        diagTitle.textContent = '"Hostage of Municipal Real Estate"';
+      } else {
+        diagTitle.textContent = '"Relatively Stable Hostage"';
+      }
+
+      document.getElementById('cardDaysWorked').textContent = 
+        `You work ${daysWorked} days every month before you can afford food.`;
+      document.getElementById('cardSponsorDate').textContent = 
+        `State Free Day: ${orig.state_sponsor_date} (${orig.state_sponsor_program})`;
+      document.getElementById('cardBureaucracy').textContent = orig.paperwork_index;
+      document.getElementById('cardOriginReality').textContent = `CURRENT: ${orig.housing_reality}`;
+      document.getElementById('cardTargetReality').textContent = `EXILE: ${dest.living_reality}`;
+      document.getElementById('cardCulturalHazard').textContent = dest.cultural_hazard;
+    }
+
+    // Input events
+    originSelect.addEventListener('change', () => { updateLabels(); recalculate(); });
+    targetSelect.addEventListener('change', recalculate);
+    salaryRange.addEventListener('input', () => { updateLabels(); recalculate(); });
+    rentRange.addEventListener('input', () => { updateLabels(); recalculate(); });
+    monthsRange.addEventListener('input', () => { updateLabels(); });
+
+    // Presets
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        originSelect.value = btn.dataset.origin;
+        targetSelect.value = btn.dataset.target;
+        salaryRange.value = btn.dataset.salary;
+        rentRange.value = btn.dataset.rent;
+        updateLabels();
+        recalculate();
+      });
+    });
+
+    // 1-Tap PNG Download
+    document.getElementById('downloadPngBtn').addEventListener('click', () => {
+      const card = document.getElementById('receiptWrapper');
+      if (window.html2canvas) {
+        window.html2canvas(card, { scale: 3, backgroundColor: null }).then(canvas => {
+          const a = document.createElement('a');
+          a.download = `euroexile-${originSelect.value}-to-${targetSelect.value}.png`;
+          a.href = canvas.toDataURL('image/png');
+          a.click();
+        });
+      }
+    });
+
+    // Initialize
+    updateLabels();
+    recalculate();
+  </script>
+</body>
 </html>
